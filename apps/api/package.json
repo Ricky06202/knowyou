@@ -1,0 +1,29 @@
+{
+  "name": "@knowyou/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "db:generate": "bunx drizzle-kit generate --dialect=postgresql --schema=src/db/schema.ts",
+    "db:migrate": "bun src/db/migrate.ts",
+    "db:push": "bunx drizzle-kit push --dialect=postgresql --schema=src/db/schema.ts",
+    "db:studio": "bunx drizzle-kit studio --schema=src/db/schema.ts"
+  },
+  "dependencies": {
+    "@knowyou/shared": "workspace:*",
+    "bcrypt": "^5.1.1",
+    "drizzle-orm": "^0.44.0",
+    "hono": "^4.7.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.0",
+    "postgres": "^3.4.9",
+    "typescript": "^5.7.0"
+  }
+}
