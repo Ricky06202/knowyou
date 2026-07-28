@@ -43,6 +43,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: landing
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN:-}
     container_name: knowyou-landing
     restart: unless-stopped
     ports:
