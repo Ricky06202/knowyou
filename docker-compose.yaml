@@ -1,19 +1,18 @@
 services:
   postgres:
     image: postgres:17-alpine
-    container_name: knowyou-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-knowyou}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-knowyou_dev_2026}
-      POSTGRES_DB: ${POSTGRES_DB:-knowyou}
+      POSTGRES_USER: knowyou
+      POSTGRES_PASSWORD: knowyou_dev_2026
+      POSTGRES_DB: knowyou
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-knowyou} -d ${POSTGRES_DB:-knowyou}"]
+      test: ["CMD-SHELL", "pg_isready -U knowyou -d knowyou"]
       interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 5
       start_period: 30s
 
   api:
@@ -29,7 +28,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_URL: postgresql://knowyou:knowyou_dev_2026@postgres:5432/knowyou
       JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
       CORS_ORIGIN: ${CORS_ORIGIN}
