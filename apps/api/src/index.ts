@@ -44,8 +44,7 @@ app.route("/api/trending", trending);
 app.route("/api/recommendations", recommendations);
 
 app.get("/api/download", async (c) => {
-  const releaseUrl = "https://github.com/Ricky06202/knowyou/releases/latest/download/KnowYou.apk";
-  return c.redirect(releaseUrl, 302);
+  return c.redirect("https://github.com/Ricky06202/knowyou/releases/download/v0.1.0/KnowYou.apk", 302);
 });
 
 app.notFound((c) => c.json({ error: "Not found" }, 404));
