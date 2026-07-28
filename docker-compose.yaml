@@ -37,6 +37,9 @@ services:
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       OMDB_API_KEY: ${OMDB_API_KEY}
       PORT: 3001
+      APK_PATH: /data/knowyou.apk
+    volumes:
+      - apk_data:/data
 
   landing:
     build:

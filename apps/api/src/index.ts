@@ -44,7 +44,19 @@ app.route("/api/trending", trending);
 app.route("/api/recommendations", recommendations);
 
 app.get("/api/download", async (c) => {
-  return c.redirect("https://github.com/Ricky06202/knowyou/releases/download/v0.1.0/KnowYou.apk", 302);
+  const apkPath = process.env.APK_PATH || "/data/knowyou.apk";
+  try {
+    const file = Bun.file(apkPath);
+    if (!await file.exists()) return c.json({ error: "APK not found" }, 404);
+    return new Response(file, {
+      headers: {
+        "Content-Type": "application/vnd.android.package-archive",
+        "Content-Disposition": 'attachment; filename="KnowYou.apk"',
+      },
+    });
+  } catch {
+    return c.json({ error: "APK not available" }, 404);
+  }
 });
 
 app.notFound((c) => c.json({ error: "Not found" }, 404));
