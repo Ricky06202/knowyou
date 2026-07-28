@@ -119,3 +119,33 @@ Integra RAWG para empezar con videojuegos (es la más sencilla).
 Añade la lógica de perfil para guardar gustos y disgustos.
 
 Prueba y repite: Ve mejorando el sistema con cada iteración.
+
+## 🚀 Reglas de Despliegue (Coolify)
+
+### 1. Repositorio PÚBLICO siempre
+- El repo es público. Las API keys NUNCA van en archivos del repo.
+- Solo van en Coolify → Environment Variables.
+
+### 2. Environment Variables
+- `.env.example` solo con placeholders, NUNCA con keys reales.
+- Si se exponen keys, purgar historial con:
+  `git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch .env.example' -- --all`
+  `git push --force`
+
+### 3. APK Android
+- No subir APK al repo. Usar GitHub Releases:
+  `gh release create vX.Y.Z --title "KnowYou vX.Y.Z" --notes "..."`
+  `gh release upload vX.Y.Z KnowYou.apk`
+- Landing apunta a: `https://github.com/Ricky06202/knowyou/releases/latest/download/KnowYou.apk`
+- No necesita redeploy al cambiar versión.
+
+### 4. Docker Build
+- NO descargar APK durante el build. El enlace a GitHub Releases es directo.
+- Multi-stage: target `api` y `landing`, ambos en el mismo Dockerfile.
+- Usar `wget` si se necesita descargar algo (más común en imágenes Alpine que `curl`).
+
+### 5. Docker Compose
+- PostgreSQL con healthcheck y start_period.
+- API con depends_on condition: service_healthy.
+- Landing con Astro build + `bun x serve` para servir estáticos.
+- Variables postgres hardcodeadas con valores dev por defecto (override con env vars en Coolify).
