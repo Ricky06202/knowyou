@@ -19,7 +19,7 @@ CMD ["bun", "run", "--cwd", "apps/api", "start"]
 FROM oven/bun:1 AS landing
 WORKDIR /app
 
-RUN curl -L -o /tmp/KnowYou.apk \
+RUN wget -q -O /tmp/KnowYou.apk \
       "https://github.com/Ricky06202/knowyou/releases/download/v0.1.0/KnowYou.apk"
 
 COPY package.json bun.lock turbo.json ./
