@@ -19,6 +19,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: api
     container_name: knowyou-api
     restart: unless-stopped
     ports:
@@ -36,9 +37,18 @@ services:
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       OMDB_API_KEY: ${OMDB_API_KEY}
       PORT: 3001
-      APK_PATH: ${APK_PATH:-/data/knowyou.apk}
-    volumes:
-      - apk_data:/data
+
+  landing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: landing
+    container_name: knowyou-landing
+    restart: unless-stopped
+    ports:
+      - "4321:4321"
+    environment:
+      ASTRO_PORT: 4321
 
 volumes:
   pgdata:
