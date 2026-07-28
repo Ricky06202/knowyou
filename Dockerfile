@@ -19,13 +19,8 @@ CMD ["bun", "run", "--cwd", "apps/api", "start"]
 FROM oven/bun:1 AS landing
 WORKDIR /app
 
-ARG GITHUB_TOKEN
-RUN if [ -n "$GITHUB_TOKEN" ]; then \
-      curl -L -H "Authorization: Bearer $GITHUB_TOKEN" \
-        -H "Accept: application/octet-stream" \
-        "https://api.github.com/repos/Ricky06202/knowyou/releases/assets/492079334" \
-        -o /tmp/KnowYou.apk; \
-    fi
+RUN curl -L -o /tmp/KnowYou.apk \
+      "https://github.com/Ricky06202/knowyou/releases/download/v0.1.0/KnowYou.apk"
 
 COPY package.json bun.lock turbo.json ./
 COPY apps/api/package.json apps/api/package.json
