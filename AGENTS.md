@@ -128,11 +128,20 @@ Prueba y repite: Ve mejorando el sistema con cada iteración.
 
 ### 2. Environment Variables
 - `.env.example` solo con placeholders, NUNCA con keys reales.
+- NUNCA trackear `.env.production` ni ningún archivo con keys reales.
 - Si se exponen keys, purgar historial con:
-  `git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch .env.example' -- --all`
-  `git push --force`
+  `git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch .env.production' -- --all`
+  `git push --force --all`
 
 ### 3. APK Android
+- Keystore en `github.com/Ricky06202/keys` → `knowyou-release.keystore` (alias: `knowyou`)
+- Clonado local en `~/Documentos/keys/`
+- Firmado automático vía Gradle + `keystore.properties` (gitignorado)
+- Para firmar manual:
+  ```bash
+  zipalign -p -f 4 unsigned.apk app.apk
+  apksigner sign --ks ~/Documentos/keys/knowyou-release.keystore --ks-key-alias knowyou --ks-pass pass:knowyou123 --key-pass pass:knowyou123 app.apk
+  ```
 - No subir APK al repo. Usar GitHub Releases:
   `gh release create vX.Y.Z --title "KnowYou vX.Y.Z" --notes "..."`
   `gh release upload vX.Y.Z KnowYou.apk`
