@@ -35,7 +35,6 @@ services:
       RAWG_API_KEY: ${RAWG_API_KEY}
       TMDB_API_KEY: ${TMDB_API_KEY}
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
-      OMDB_API_KEY: ${OMDB_API_KEY}
       PORT: 3001
 
   landing:
